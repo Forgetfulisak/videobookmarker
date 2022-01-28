@@ -37,7 +37,7 @@ chrome.storage.onChanged.addListener(async () => {
   let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   console.log("Checking to inject: ", tab.url)
   
-  if (!tab.url.match("/.*youtube.com/.*g")) {
+  if (!tab.url.match("/.*youtube.com/.*")) {
     return
   }
   console.log("injecting")
