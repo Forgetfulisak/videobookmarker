@@ -79,8 +79,9 @@ document.addEventListener("keydown", (ev) => {
         ev.preventDefault()
     }
 
-    console.log("ignored?: ", ignoredKeys.indexOf(ev.key) > 0);
-    if (ignoredKeys.indexOf(ev.key) > 0) {
+    console.log("ignored?: ", ignoredKeys.indexOf(ev.key) > -1);
+    console.log("ignoring: ", ignoredKeys)
+    if (ignoredKeys.indexOf(ev.key) > -1) {
         return
     }
     
