@@ -70,13 +70,13 @@ document.addEventListener("keydown", (ev) => {
     }
     
     console.log("Passthrough?: ", ev.key, passthroughKeys.indexOf(ev.key) > 0);
+    console.log("pass", passthroughKeys)
     
 
-    if (passthroughKeys.indexOf(ev.key) > 0) {
+    if (passthroughKeys.indexOf(ev.key) < 0) {
         ev.stopImmediatePropagation()
         ev.stopPropagation()
         ev.preventDefault()
-        return
     }
 
     console.log("ignored?: ", ignoredKeys.indexOf(ev.key) > 0);

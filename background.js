@@ -33,6 +33,19 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   })
 });
 
+chrome.storage.onChanged.addListener(async () => {
+  let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+  console.log("Checking to inject: ", tab.url)
+  
+  if (!tab.url.match("/.*youtube.com/.*g")) {
+    return
+  }
+  console.log("injecting")
+  chrome.scripting.executeScript({
+    target: { tabId: tab.id },
+    files: ['content/content.js']
+  });
+})
 
 
 function sendPost(title, time, key) {
