@@ -1,45 +1,13 @@
-// setTimeout(() => {
 
-
-//     console.log("i am content wooo!")
-//     var element = document.getElementById('movie_player'); // Not actual selector
-//     element.classList.remove("ytp-autohide");
-//     console.log("sendnig ", element)
-//     // chrome.runtime.sendMessage({
-//     //   html:    element, 
-//     //   service: 'gmail'
-//     // }, function (response) {
-//     // });
-    
-//     console.log("message sent!")
-    
-// }, 10000)
-
-/*
-ytb-autohide?
-id: "movie_player"
-*/
-
-// ==UserScript==
-// @name         YouTube Always show progress bar
-// @version      0.2
-// @description  Always show progress bar
-// @author       Workgroups
-// @match        *://www.youtube.com/*
-// @grant        none
-// @namespace https://greasyfork.org/users/127290
-// ==/UserScript==
- 
+// Hacked together from https://greasyfork.org/sv/scripts/30046-youtube-always-show-progress-bar/code
 function findVideoInterval() {
-    console.log("repeating")
     var ytplayer = document.querySelector(".html5-video-player");
     var video = ytplayer.querySelector("video");
-    var progressbar = ytplayer.querySelector(".ytp-play-progress");
-    var loadbar = ytplayer.querySelector(".ytp-load-progress");
-    if (!video || !progressbar || !loadbar) {
+    if (!video) {
         return;
     }
-    console.log(video.currentTime)
+
+    return video.currentTime
 };
 
 
@@ -86,16 +54,16 @@ document.addEventListener("keydown", (ev) => {
     }
     
     let title = document.querySelector("h1.title.style-scope.ytd-video-primary-info-renderer").innerText;
-    var ytplayer = document.querySelector(".html5-video-player");
-    var video = ytplayer.querySelector("video");
-    var progressbar = ytplayer.querySelector(".ytp-play-progress");
-    var loadbar = ytplayer.querySelector(".ytp-load-progress");
-    if (!video || !progressbar || !loadbar) {
-        console.log("WARNING SOMETHING WENT WRONG! No video/progressbar/loadbar")
-        return;
-    }
-    console.log("pressed key: ", ev.key, video.currentTime);
 
-    chrome.runtime.sendMessage({title: title, time: video.currentTime, key: ev.key})
+    let time = findVideoInterval()
+    if (!time) {
+        console.log("Could not read video.currentTime")
+        return
+    }
+
+    console.log("pressed key: ", ev.key, time);
+
+
+    chrome.runtime.sendMessage({title: title, time: time, key: ev.key})
 
 }, {capture: true})
