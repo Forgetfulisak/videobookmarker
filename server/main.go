@@ -11,6 +11,7 @@ func post(w http.ResponseWriter, r *http.Request) {
 	data, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		log.Println("Could not read request;", err)
+		return
 	}
 	defer r.Body.Close()
 
@@ -22,5 +23,4 @@ func main() {
 	http.HandleFunc("/", post)
 
 	http.ListenAndServe("localhost:9393", nil)
-
 }
